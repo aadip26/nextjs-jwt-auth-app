@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+
+  app:
+    # Use image from GitHub Container Registry
+    image: ghcr.io/aadip26/nextjs-jwt-auth-app:latest
+    # For Apple Silicon, specify AMD64 platform
+    platform: linux/amd64
+    container_name: nextjs-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    # Load environment variables from .env file (NOT copied into image)
+    env_file:
+      - .env
+    environment:
+      # Override specific variables if needed (optional)
+      NODE_ENV: production
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+
